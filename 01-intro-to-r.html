@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -108,7 +107,7 @@ $(function () {
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -121,13 +120,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -390,6 +387,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -418,6 +416,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -501,9 +505,9 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
+<!--        <li>
           <a href="index.html">Home</a>
-        </li>
+        </li> -->
         <li>
           <a href="00-before-we-start.html">Before we start</a>
         </li>
@@ -519,24 +523,24 @@ div.tocify {
         <li>
           <a href="04-visualization-ggplot2.html">Visualizing data</a>
         </li>
-        <li>
+<!--        <li>
           <a href="05-r-and-databases.html">R and SQL</a>
-        </li>
+        </li> 
         <li>
           <a href="code-handout.R">Code Handout</a>
-        </li>
+        </li> -->
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li>
+<!--        <li>
           <div class="btn-group" style="margin-right: 10px;">
             <a type="button" class="btn btn-sm btn-success navbar-btn" href="https://carpentries.wedid.it" onclick="_paq.push(['trackEvent', 'donate', 'click', 'top-button']);">Donate</a>
             <a type="button" class="btn btn-sm btn-success navbar-btn"  data-toggle="tooltip" data-placement="bottom" title="If this lesson is useful to you, consider making a contribution to The Carpentries by clicking on the 'Donate' button. Thank you for your support!">
               <span class="glyphicon glyphicon-question-sign"></span>
               <span class="sr-only">Toggle Tooltip</span>
             </a>
-          </div>
-        </li>
+          </div> 
+        </li> -->
 	<li class="search">
 	  <input id="search-box" type="text"  placeholder="Search...">
 	  <input type="submit">
@@ -587,9 +591,9 @@ div.tocify {
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="dv">12</span> <span class="op">/</span><span class="st"> </span><span class="dv">7</span></a></code></pre></div>
 <p>However, to do useful and interesting things, we need to assign <em>values</em> to <em>objects</em>. To create an object, we need to give it a name followed by the assignment operator <code>&lt;-</code>, and the value we want to give it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">weight_kg &lt;-<span class="st"> </span><span class="dv">55</span></a></code></pre></div>
-<p><code>&lt;-</code> is the assignment operator. It assigns values on the right to objects on the left. So, after executing <code>x &lt;- 3</code>, the value of <code>x</code> is <code>3</code>. The arrow can be read as 3 <strong>goes into</strong> <code>x</code>. For historical reasons, you can also use <code>=</code> for assignments, but not in every context. Because of the <a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">slight</a> <a href="http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html">differences</a> in syntax, it is good practice to always use <code>&lt;-</code> for assignments.</p>
+<p><code>&lt;-</code> is the assignment operator. It assigns values on the right to objects on the left. So, after executing <code>x &lt;- 3</code>, the value of <code>x</code> is <code>3</code>. The arrow can be read as 3 <strong>goes into</strong> <code>x</code>. For historical reasons, you can also use <code>=</code> for assignments, but not in every context. Because of the <a href="https://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">slight</a> <a href="https://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html">differences</a> in syntax, it is good practice to always use <code>&lt;-</code> for assignments.</p>
 <p>In RStudio, typing <kbd>Alt</kbd> + <kbd>-</kbd> (push <kbd>Alt</kbd> at the same time as the <kbd>-</kbd> key) will write <code>&lt;-</code> in a single keystroke in a PC, while typing <kbd>Option</kbd> + <kbd>-</kbd> (push <kbd>Option</kbd> at the same time as the <kbd>-</kbd> key) does the same in a Mac.</p>
-<p>Objects can be given any name such as <code>x</code>, <code>current_temperature</code>, or <code>subject_id</code>. You want your object names to be explicit and not too long. They cannot start with a number (<code>2x</code> is not valid, but <code>x2</code> is). R is case sensitive (e.g., <code>weight_kg</code> is different from <code>Weight_kg</code>). There are some names that cannot be used because they are the names of fundamental functions in R (e.g., <code>if</code>, <code>else</code>, <code>for</code>, see <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html">here</a> for a complete list). In general, even if it’s allowed, it’s best to not use other function names (e.g., <code>c</code>, <code>T</code>, <code>mean</code>, <code>data</code>, <code>df</code>, <code>weights</code>). If in doubt, check the help to see if the name is already in use. It’s also best to avoid dots (<code>.</code>) within an object name as in <code>my.dataset</code>. There are many functions in R with dots in their names for historical reasons, but because dots have a special meaning in R (for methods) and other programming languages, it’s best to avoid them. It is also recommended to use nouns for object names, and verbs for function names. It’s important to be consistent in the styling of your code (where you put spaces, how you name objects, etc.). Using a consistent coding style makes your code clearer to read for your future self and your collaborators. In R, three popular style guides are <a href="https://google.github.io/styleguide/Rguide.xml">Google’s</a>, <a href="http://jef.works/R-style-guide/">Jean Fan’s</a> and the <a href="http://style.tidyverse.org/">tidyverse’s</a>. The tidyverse’s is very comprehensive and may seem overwhelming at first. You can install the <a href="https://github.com/jimhester/lintr"><strong><code>lintr</code></strong></a> package to automatically check for issues in the styling of your code.</p>
+<p>Objects can be given any name such as <code>x</code>, <code>current_temperature</code>, or <code>subject_id</code>. You want your object names to be explicit and not too long. They cannot start with a number (<code>2x</code> is not valid, but <code>x2</code> is). R is case sensitive (e.g., <code>weight_kg</code> is different from <code>Weight_kg</code>). There are some names that cannot be used because they are the names of fundamental functions in R (e.g., <code>if</code>, <code>else</code>, <code>for</code>, see <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html">here</a> for a complete list). In general, even if it’s allowed, it’s best to not use other function names (e.g., <code>c</code>, <code>T</code>, <code>mean</code>, <code>data</code>, <code>df</code>, <code>weights</code>). If in doubt, check the help to see if the name is already in use. It’s also best to avoid dots (<code>.</code>) within names. Many function names in R itself have them and dots also have a special meaning (methods) in R and other programming languages. To avoid confusion, don’t include dots in names. It is also recommended to use nouns for object names, and verbs for function names. It’s important to be consistent in the styling of your code (where you put spaces, how you name objects, etc.). Using a consistent coding style makes your code clearer to read for your future self and your collaborators. In R, three popular style guides are <a href="https://google.github.io/styleguide/Rguide.xml">Google’s</a>, <a href="https://jef.works/R-style-guide/">Jean Fan’s</a> and the <a href="https://style.tidyverse.org/">tidyverse’s</a>. The tidyverse’s is very comprehensive and may seem overwhelming at first. You can install the <a href="https://github.com/jimhester/lintr"><strong><code>lintr</code></strong></a> package to automatically check for issues in the styling of your code.</p>
 <blockquote>
 <h3 id="objects-vs.variables">Objects vs. variables</h3>
 <p>What are known as <code>objects</code> in <code>R</code> are known as <code>variables</code> in many other programming languages. Depending on the context, <code>object</code> and <code>variable</code> can have drastically different meanings. However, in this lesson, the two words are used synonymously. For more information see: <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects</a></p>
@@ -624,8 +628,8 @@ div.tocify {
 <div id="functions-and-their-arguments" class="section level3">
 <h3>Functions and their arguments</h3>
 <p>Functions are “canned scripts” that automate more complicated sets of commands including operations assignments, etc. Many functions are predefined, or can be made available by importing R <em>packages</em> (more on that later). A function usually takes one or more inputs called <em>arguments</em>. Functions often (but not always) return a <em>value</em>. A typical example would be the function <code>sqrt()</code>. The input (the argument) must be a number, and the return value (in fact, the output) is the square root of that number. Executing a function (‘running it’) is called <em>calling</em> the function. An example of a function call is:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">b &lt;-<span class="st"> </span><span class="kw">sqrt</span>(a)</a></code></pre></div>
-<p>Here, the value of <code>a</code> is given to the <code>sqrt()</code> function, the <code>sqrt()</code> function calculates the square root, and returns the value which is then assigned to the object <code>b</code>. This function is very simple, because it takes just one argument.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ten &lt;-<span class="st"> </span><span class="kw">sqrt</span>(weight_kg)</a></code></pre></div>
+<p>Here, the value of <code>ten</code> is given to the <code>sqrt()</code> function, the <code>sqrt()</code> function calculates the square root, and returns the value which is then assigned to the object <code>weight_kg</code>. This function is very simple, because it takes just one argument.</p>
 <p>The return ‘value’ of a function need not be numerical (like that of <code>sqrt()</code>), and it also does not need to be a single item: it can be a set of things, or even a dataset. We’ll see that when we read data files into R.</p>
 <p>Arguments can be anything, not only numbers or filenames, but also other objects. Exactly what each argument means differs per function, and must be looked up in the documentation (see below). Some functions take arguments which may either be specified by the user, or, if left out, take on a <em>default</em> value: these are called <em>options</em>. Options are typically used to alter the way the function operates, such as whether it ignores ‘bad values’, or what symbol to use in a plot. However, if you want something specific, you can specify a value of your choice which will be used instead of the default.</p>
 <p>Let’s try a function that can take multiple arguments: <code>round()</code>.</p>
@@ -715,10 +719,8 @@ Vectors can be of only one data type. R tries to convert (coerce) the content of
 </div>
 </p>
 <ul>
-<li><p>How many values in <code>combined_logical</code> are <code>&quot;TRUE&quot;</code> (as a character) in the following example:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">num_logical &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">char_logical &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">combined_logical &lt;-<span class="st"> </span><span class="kw">c</span>(num_logical, char_logical)</a></code></pre></div></li>
+<li><p>How many values in <code>combined_logical</code> are <code>&quot;TRUE&quot;</code> (as a character) in the following example (reusing the 2 <code>..._logical</code>s from above):</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">combined_logical &lt;-<span class="st"> </span><span class="kw">c</span>(num_logical, char_logical)</a></code></pre></div></li>
 </ul>
 <div class="accordion">
 <h3 class="toc-ignore">
@@ -762,12 +764,12 @@ logical → numeric → character ← logical
 <h3>Conditional subsetting</h3>
 <p>Another common way of subsetting is by using a logical vector. <code>TRUE</code> will select the element with the same index, while <code>FALSE</code> will not:</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">weight_g &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">34</span>, <span class="dv">39</span>, <span class="dv">54</span>, <span class="dv">55</span>)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">weight_g[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]</a></code></pre></div>
-<pre><code>#&gt; [1] 21 39 54</code></pre>
+<a class="sourceLine" id="cb35-2" data-line-number="2">weight_g[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>)]</a></code></pre></div>
+<pre><code>#&gt; [1] 21 54 55</code></pre>
 <p>Typically, these logical vectors are not typed by hand, but are the output of other functions or logical tests. For instance, if you wanted to select only the values above 50:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">weight_g <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span>    <span class="co"># will return logicals with TRUE for the indices that meet the condition</span></a></code></pre></div>
 <pre><code>#&gt; [1] FALSE FALSE FALSE  TRUE  TRUE</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">## so we can use this to select only the values above 50</a>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co">## so we can use this to select only the values above 50</span></a>
 <a class="sourceLine" id="cb39-2" data-line-number="2">weight_g[weight_g <span class="op">&gt;</span><span class="st"> </span><span class="dv">50</span>]</a></code></pre></div>
 <pre><code>#&gt; [1] 54 55</code></pre>
 <p>You can combine multiple tests using <code>&amp;</code> (both conditions are true, AND) or <code>|</code> (at least one of the conditions is true, OR):</p>
@@ -812,13 +814,13 @@ When using “&gt;” or “&lt;” on strings, R compares their alphabetical or
 <a class="sourceLine" id="cb51-4" data-line-number="4"><span class="kw">mean</span>(heights, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb51-5" data-line-number="5"><span class="kw">max</span>(heights, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>If your data include missing values, you may want to become familiar with the functions <code>is.na()</code>, <code>na.omit()</code>, and <code>complete.cases()</code>. See below for examples.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">## Extract those elements which are not missing values.</a>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co">## Extract those elements which are not missing values.</span></a>
 <a class="sourceLine" id="cb52-2" data-line-number="2">heights[<span class="op">!</span><span class="kw">is.na</span>(heights)]</a>
 <a class="sourceLine" id="cb52-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb52-4" data-line-number="4">## Returns the object with incomplete cases removed. The returned object is an atomic vector of type `&quot;numeric&quot;` (or `&quot;double&quot;`).</a>
+<a class="sourceLine" id="cb52-4" data-line-number="4"><span class="co">## Returns the object with incomplete cases removed. The returned object is an atomic vector of type `&quot;numeric&quot;` (or `&quot;double&quot;`).</span></a>
 <a class="sourceLine" id="cb52-5" data-line-number="5"><span class="kw">na.omit</span>(heights)</a>
 <a class="sourceLine" id="cb52-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb52-7" data-line-number="7">## Extract those elements which are complete cases. The returned object is an atomic vector of type `&quot;numeric&quot;` (or `&quot;double&quot;`).</a>
+<a class="sourceLine" id="cb52-7" data-line-number="7"><span class="co">## Extract those elements which are complete cases. The returned object is an atomic vector of type `&quot;numeric&quot;` (or `&quot;double&quot;`).</span></a>
 <a class="sourceLine" id="cb52-8" data-line-number="8">heights[<span class="kw">complete.cases</span>(heights)]</a></code></pre></div>
 <p>Recall that you can use the <code>typeof()</code> function to find the type of your atomic vector.</p>
 <blockquote>
@@ -854,7 +856,7 @@ Answer
 </blockquote>
 <p>Now that we have learned how to write scripts, and the basics of R’s data structures, we are ready to start working with the Portal dataset we have been using in the other lessons, and learn about data frames.</p>
 <p style="text-align: right; font-size: small;">
-Page built on: 📆 2019-09-10 ‒ 🕢 15:10:08
+Page built on: 📆 2020-04-23 ‒ 🕢 10:32:43
 </p>
 </div>
 
@@ -862,7 +864,7 @@ Page built on: 📆 2019-09-10 ‒ 🕢 15:10:08
 <div class="row">
   <div class="col-md-7 text-left">
     <p class="text-muted">
-      <a href="http://datacarpentry.org/">Data Carpentry</a>,  2014-2019.
+      <a href="https://datacarpentry.org/">Data Carpentry</a>,  2014-2019.
     </p>
     <p class="text-muted">
       <a href="LICENSE.html">License</a>.
