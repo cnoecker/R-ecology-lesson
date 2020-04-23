@@ -423,12 +423,12 @@ div.tocify {
         <li>
           <a href="04-visualization-ggplot2.html">Visualizing data</a>
         </li>
-        <li>
+<!--        <li>
           <a href="05-r-and-databases.html">R and SQL</a>
         </li>
         <li>
           <a href="code-handout.R">Code Handout</a>
-        </li>
+        </li> -->
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -477,7 +477,8 @@ div.tocify {
 </p>
 <p>This is a modification of the Data Carpentry R for Ecologists lesson, for use in the Microbial Bioinformatics workshop series at UCSF. It has been modified to use microbiome 16S rRNA amplicon sequencing data as an example dataset.</p>
 <p>Data Carpentry’s aim is to teach researchers basic concepts, skills, and tools for working with data so that they can get more done in less time, and with less pain. The lessons below were designed for those interested in working with ecology data in R.</p>
-<p>This is an introduction to R designed for participants with no programming experience. These lessons can be taught in a day (~ 6 hours). They start with some basic information about R syntax, the RStudio interface, and move through how to import CSV files, the structure of data frames, how to deal with factors, how to add/remove rows and columns, how to calculate summary statistics from a data frame, and a brief introduction to plotting. The last lesson demonstrates how to work with databases directly from R.</p>
+<p>This is an introduction to R designed for participants with no programming experience. These lessons can be taught in a day (~ 6 hours). They start with some basic information about R syntax, the RStudio interface, and move through how to import CSV files, the structure of data frames, how to deal with factors, how to add/remove rows and columns, how to calculate summary statistics from a data frame, and an introduction to plotting. 
+</p>
 <div id="chapters" class="section level2">
 <h2>Chapters</h2>
 <ol style="list-style-type: decimal">
@@ -498,7 +499,7 @@ div.tocify {
 </div>
 <div id="setup-instructions" class="section level3">
 <h3>Setup instructions</h3>
-<p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing environment, but using R alone is no fun. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio. After installing both programs, you will need to install the <strong><code>tidyverse</code></strong> package from within RStudio. Follow the instructions below for your operating system, and then follow the instructions to install <strong><code>tidyverse</code></strong> and <strong><code>RSQLite</code></strong>.</p>
+<p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing environment, but using R alone is no fun. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio. After installing both programs, you will need to install the <strong><code>tidyverse</code></strong> package from within RStudio. Follow the instructions below for your operating system, and then follow the instructions to install <strong><code>tidyverse</code></strong> and <strong><code>qiime2R</code></strong>.</p>
 <div id="windows" class="section level4">
 <h4>Windows</h4>
 <div id="if-you-already-have-r-and-rstudio-installed" class="section level5">
@@ -554,10 +555,11 @@ div.tocify {
 </div>
 <div id="for-everyone" class="section level4">
 <h4>For everyone</h4>
-<p><strong>After installing R and RStudio, you need to install the <code>tidyverse</code> and <code>RSQLite</code> packages.</strong></p>
+<p><strong>After installing R and RStudio, you need to install the <code>tidyverse</code> and <code>qiime2R</code> packages.</strong></p>
 <ul>
-<li><p>After starting RStudio, at the console type: <code>install.packages(c(&quot;tidyverse&quot;, &quot;RSQLite&quot;))</code></p></li>
-<li><p>You can also do this by going to Tools -&gt; Install Packages and typing the names of the packages separated by a comma.</p></li>
+<li><p>After starting RStudio, at the console type: <code>install.packages(c(&quot;tidyverse&quot;, &quot;remotes&quot;))</code></p></li>
+<li><p>Then you'll need to install qiime2R using the remotes package:  <code>remotes::install_github(&quot;jbisanz/qiime2R&quot;)</code></p></li>
+<!-- <li><p>You can also do this by going to Tools -&gt; Install Packages and typing the names of the packages separated by a comma.</p></li> -->
 </ul>
 </div>
 </div>
