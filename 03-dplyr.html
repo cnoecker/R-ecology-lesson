@@ -609,27 +609,13 @@ div.tocify {
 <p>The package <strong><code>tidyr</code></strong> addresses the common problem of wanting to reshape your data for plotting and use by different R functions. Sometimes we want data sets where we have one row per measurement. Sometimes we want a data frame where each measurement type has its own column, and rows are instead more aggregated groups - like plots or aquaria. Moving back and forth between these formats is non-trivial, and <strong><code>tidyr</code></strong> gives you tools for this and more sophisticated data manipulation.</p>
 <p>To learn more about <strong><code>dplyr</code></strong> and <strong><code>tidyr</code></strong> after the workshop, you may want to check out this <a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf">handy data transformation with <strong><code>dplyr</code></strong> cheatsheet</a> and this <a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf">one about <strong><code>tidyr</code></strong></a>.</p>
 <p>We’ll read in our data using the <code>read_delim()</code> function, from the tidyverse package <strong><code>readr</code></strong>, instead of <code>read.csv()</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">metadata &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;~/Desktop/tutorial16S/metadata.tsv&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</a></code></pre></div>
-<pre><code>#&gt; Parsed with column specification:
-#&gt; cols(
-#&gt;   SampleID = col_character(),
-#&gt;   MouseID = col_character(),
-#&gt;   Time_days = col_character(),
-#&gt;   Treatment = col_character()
-#&gt; )</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">metadata &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;~/Desktop/tutorial16S/metadata.tsv&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">comment =</span> <span class="st">&quot;#&quot;</span>)</a></code></pre></div>
-<pre><code>#&gt; Parsed with column specification:
-#&gt; cols(
-#&gt;   SampleID = col_character(),
-#&gt;   MouseID = col_character(),
-#&gt;   Time_days = col_double(),
-#&gt;   Treatment = col_character()
-#&gt; )</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">metadata &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;metadata.tsv&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">metadata &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;metadata.tsv&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">comment =</span> <span class="st">&quot;#&quot;</span>)</a></code></pre></div>
 <p>You will see the message <code>Parsed with column specification</code>, followed by each column name and its data type. When you execute <code>read_delim</code> on a data file, it looks through the first 1000 rows of each column and guesses the data type for each column as it reads it into R. For example, in this dataset, <code>read_delim</code> reads <code>weight</code> as <code>col_double</code> (a numeric data type), and <code>species</code> as <code>col_character</code>. You have the option to specify the data type for a column manually by using the <code>col_types</code> argument in <code>read_delim</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## inspect the data</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">str</span>(metadata)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## preview the data</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">View</span>(metadata)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## inspect the data</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">str</span>(metadata)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">## preview the data</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">View</span>(metadata)</a></code></pre></div>
 <p>Notice that the class of the data is now <code>tbl_df</code></p>
 <p>This is referred to as a “tibble”. Tibbles tweak some of the behaviors of the data frame objects we introduced in the previous episode. The data structure is very similar to a data frame. For our purposes the only differences are that:</p>
 <ol style="list-style-type: decimal">
@@ -650,36 +636,36 @@ div.tocify {
 <div id="selecting-columns-and-filtering-rows" class="section level2">
 <h2>Selecting columns and filtering rows</h2>
 <p>To select columns of a data frame, use <code>select()</code>. The first argument to this function is the data frame (<code>metadata</code>), and the subsequent arguments are the columns to keep.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">select</span>(metadata, MouseID, Treatment)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">select</span>(metadata, MouseID, Treatment)</a></code></pre></div>
 <p>To select all columns <em>except</em> certain ones, put a “-” in front of the variable to exclude it.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">select</span>(metadata, <span class="op">-</span>SampleID)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">select</span>(metadata, <span class="op">-</span>SampleID)</a></code></pre></div>
 <p>There are also fancier ways to select columns, including the function <code>starts_with()</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">select</span>(metadata, <span class="kw">starts_with</span>(<span class="st">&quot;T&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">select</span>(metadata, <span class="kw">starts_with</span>(<span class="st">&quot;T&quot;</span>))</a></code></pre></div>
 <p>To choose rows based on a specific criterion, use <code>filter()</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">filter</span>(metadata, Treatment <span class="op">==</span><span class="st"> &quot;After_Diet&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">filter</span>(metadata, Treatment <span class="op">==</span><span class="st"> &quot;After_Diet&quot;</span>)</a></code></pre></div>
 </div>
 <div id="pipes" class="section level2">
 <h2>Pipes</h2>
 <p>What if you want to select and filter at the same time? There are three ways to do this: use intermediate steps, nested functions, or pipes.</p>
 <p>With intermediate steps, you create a temporary data frame and use that as input to the next function, like this:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">metadata2 &lt;-<span class="st"> </span><span class="kw">filter</span>(metadata, Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">metadata_sml &lt;-<span class="st"> </span><span class="kw">select</span>(metadata2, SampleID, Time_days)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">metadata2 &lt;-<span class="st"> </span><span class="kw">filter</span>(metadata, Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">metadata_sml &lt;-<span class="st"> </span><span class="kw">select</span>(metadata2, SampleID, Time_days)</a></code></pre></div>
 <p>This is readable, but can clutter up your workspace with lots of objects that you have to name individually. With multiple steps, that can be hard to keep track of.</p>
 <p>You can also nest functions (i.e. one function inside of another), like this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">metadata_sml &lt;-<span class="st"> </span><span class="kw">select</span>(<span class="kw">filter</span>(metadata, Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>), SampleID, Time_days)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">metadata_sml &lt;-<span class="st"> </span><span class="kw">select</span>(<span class="kw">filter</span>(metadata, Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>), SampleID, Time_days)</a></code></pre></div>
 <p>This is handy, but can be difficult to read if too many functions are nested, as R evaluates the expression from the inside out (in this case, filtering, then selecting).</p>
 <p>The last option, <em>pipes</em>, are a recent addition to R. Pipes let you take the output of one function and send it directly to the next, which is useful when you need to do many things to the same dataset. Pipes in R look like <code>%&gt;%</code> and are made available via the <strong><code>magrittr</code></strong> package, installed automatically with <strong><code>dplyr</code></strong>. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(SampleID, Time_days)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(SampleID, Time_days)</a></code></pre></div>
 <p>In the above code, we use the pipe to send the <code>metadata</code> dataset first through <code>filter()</code> to keep rows where <code>weight</code> is less than 5, then through <code>select()</code> to keep only the <code>species_id</code>, <code>sex</code>, and <code>weight</code> columns. Since <code>%&gt;%</code> takes the object on its left and passes it as the first argument to the function on its right, we don’t need to explicitly include the data frame as an argument to the <code>filter()</code> and <code>select()</code> functions any more.</p>
 <p>Some may find it helpful to read the pipe like the word “then”. For instance, in the above example, we took the data frame <code>metadata</code>, <em>then</em> we <code>filter</code>ed for rows with <code>weight &lt; 5</code>, <em>then</em> we <code>select</code>ed columns <code>species_id</code>, <code>sex</code>, and <code>weight</code>. The <strong><code>dplyr</code></strong> functions by themselves are somewhat simple, but by combining them into linear workflows with the pipe, we can accomplish more complex manipulations of data frames.</p>
 <p>If we want to create a new object with this smaller version of the data, we can assign it a new name:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">metadata_sml &lt;-<span class="st"> </span>metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(SampleID, Time_days)</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">metadata_sml</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">metadata_sml &lt;-<span class="st"> </span>metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Time_days <span class="op">&lt;</span><span class="st"> </span><span class="dv">7</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(SampleID, Time_days)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">metadata_sml</a></code></pre></div>
 <p>Note that the final data frame is the leftmost part of this expression.</p>
 <blockquote>
 <h3 id="challenge" class="challenge">Challenge</h3>
@@ -689,9 +675,9 @@ div.tocify {
 Answer
 </h3>
 <div style="background: #fff;">
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Treatment <span class="op">==</span><span class="st"> &quot;Before_Diet&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">    </span><span class="kw">select</span>(MouseID, Time_days)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Treatment <span class="op">==</span><span class="st"> &quot;Before_Diet&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">    </span><span class="kw">select</span>(MouseID, Time_days)</a></code></pre></div>
 </div>
 </div>
 </blockquote>
@@ -699,31 +685,31 @@ Answer
 <h3>Mutate</h3>
 <p>Frequently you’ll want to create new columns based on the values in existing columns, for example to do unit conversions, or to find the ratio of values in two columns. For this we’ll use <code>mutate()</code>.</p>
 <p>To create a new column with Time and Treatment combined:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>))</a></code></pre></div>
 <p>You can also create a second new column based on the first new column within the same call of <code>mutate()</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>),</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">         <span class="dt">GroupShort =</span> <span class="kw">gsub</span>(<span class="st">&quot;Diet_&quot;</span>, <span class="st">&quot;&quot;</span>, Group))</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>),</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">         <span class="dt">GroupShort =</span> <span class="kw">gsub</span>(<span class="st">&quot;Diet_&quot;</span>, <span class="st">&quot;&quot;</span>, Group))</a></code></pre></div>
 <p>If this runs off your screen and you just want to see the first few rows, you can use a pipe to view the <code>head()</code> of the data. (Pipes work with non-<strong><code>dplyr</code></strong> functions, too, as long as the <strong><code>dplyr</code></strong> or <code>magrittr</code> package is loaded).</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>),</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">         <span class="dt">GroupShort =</span> <span class="kw">gsub</span>(<span class="st">&quot;Diet_&quot;</span>, <span class="st">&quot;&quot;</span>, Group)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>),</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">         <span class="dt">GroupShort =</span> <span class="kw">gsub</span>(<span class="st">&quot;Diet_&quot;</span>, <span class="st">&quot;&quot;</span>, Group)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <p>We can also combine mutate with filter, select, and any other similar function.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Time_days)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">metadata <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Time_days)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Group =</span> <span class="kw">paste</span>(Treatment, Time_days, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <p><code>is.na()</code> is a function that determines whether something is an <code>NA</code>. The <code>!</code> symbol negates the result, so we’re asking for every row where weight <em>is not</em> an <code>NA</code>.</p>
 <p>Let’s read in the feature table to test out these tools. To do so, we will use the <strong><code>read_qza</code></strong> function in the <strong><code>qiime2R</code></strong> package.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">library</span>(qiime2R)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">feature_table &lt;-<span class="st"> </span><span class="kw">read_qza</span>(<span class="st">&quot;~/Desktop/tutorial16S/artifacts/Feature_Table.qza&quot;</span>)<span class="op">$</span>data</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">class</span>(feature_table)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(qiime2R)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">feature_table &lt;-<span class="st"> </span><span class="kw">read_qza</span>(<span class="st">&quot;artifacts/Feature_Table.qza&quot;</span>)<span class="op">$</span>data</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">class</span>(feature_table)</a></code></pre></div>
 <p>The feature table is imported as a matrix. We’ll convert it to a tibble so that we can manipulate it more easily. We’ll also convert the row names (sequence IDs) into a column of the tibble, named FeatureID.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">feature_table &lt;-<span class="st"> </span>feature_table <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">class</span>(feature_table)</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">names</span>(feature_table)</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="kw">str</span>(feature_table)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">feature_table &lt;-<span class="st"> </span>feature_table <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">class</span>(feature_table)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">names</span>(feature_table)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw">str</span>(feature_table)</a></code></pre></div>
 <blockquote>
 <h3 id="challenge-1" class="challenge">Challenge</h3>
 <p>Select the FeatureID column and one other sample column from the feature table, filter it to rows where its value is greater than 100 reads, and make a new column representing the relative abundance of the remaining reads.</p>
@@ -734,10 +720,10 @@ Answer
 Answer
 </h3>
 <div style="background: #fff;">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">feature_sub &lt;-<span class="st"> </span>feature_table <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(FeatureID, MOUSE.H13.Day3) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">    </span><span class="kw">filter</span>(MOUSE.H13.Day3 <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">H13_3_rel =</span> MOUSE.H13.Day3 <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(MOUSE.H13.Day3)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">feature_sub &lt;-<span class="st"> </span>feature_table <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(FeatureID, MOUSE.H13.Day3) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">    </span><span class="kw">filter</span>(MOUSE.H13.Day3 <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">H13_3_rel =</span> MOUSE.H13.Day3 <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(MOUSE.H13.Day3)</a></code></pre></div>
 </div>
 </div>
 </blockquote>
@@ -757,16 +743,16 @@ Answer
 <li>the name of the new column of column names.</li>
 <li>the name of the new column of values.</li>
 </ol>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">features_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(feature_table, <span class="op">-</span>FeatureID, <span class="dt">names_to =</span> <span class="st">&quot;SampleID&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;Reads&quot;</span>)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">dim</span>(features_long)</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="kw">dim</span>(feature_table)</a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="kw">head</span>(features_long)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">features_long &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(feature_table, <span class="op">-</span>FeatureID, <span class="dt">names_to =</span> <span class="st">&quot;SampleID&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;Reads&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">dim</span>(features_long)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">dim</span>(feature_table)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw">head</span>(features_long)</a></code></pre></div>
 </div>
 <div id="pivot_wider" class="section level4">
 <h4>pivot_wider()</h4>
 <p><code>pivot_wider()</code> performs the reverse operation:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">features_rev &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(features_long, <span class="dt">names_from =</span> <span class="st">&quot;SampleID&quot;</span>, <span class="dt">values_from =</span> <span class="st">&quot;Reads&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">features_rev &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(features_long, <span class="dt">names_from =</span> <span class="st">&quot;SampleID&quot;</span>, <span class="dt">values_from =</span> <span class="st">&quot;Reads&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="split-apply-combine-data-analysis-and-the-summarize-function" class="section level2">
@@ -775,53 +761,53 @@ Answer
 <div id="the-summarize-function" class="section level4">
 <h4>The <code>summarize()</code> function</h4>
 <p><code>group_by()</code> is often used together with <code>summarize()</code>, which collapses each group into a single-row summary of that group. <code>group_by()</code> takes as arguments the column names that contain the <strong>categorical</strong> variables for which you want to calculate the summary statistics. Let’s try out a few options to summarize the average number of reads for each feature and see those with the most and least reads:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="st">  </span><span class="kw">arrange</span>(AvgReads) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb26-12" data-line-number="12">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(AvgReads) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-16" data-line-number="16"><span class="st">  </span><span class="kw">filter</span>(AvgReads <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb26-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb26-18" data-line-number="18">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-19" data-line-number="19"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-20" data-line-number="20"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-21" data-line-number="21"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(AvgReads)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-22" data-line-number="22"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="st">  </span><span class="kw">arrange</span>(AvgReads) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(AvgReads) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="st">  </span><span class="kw">filter</span>(AvgReads <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb23-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb23-18" data-line-number="18">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-19" data-line-number="19"><span class="st">  </span><span class="kw">group_by</span>(FeatureID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-20" data-line-number="20"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">AvgReads =</span> <span class="kw">mean</span>(Reads, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-21" data-line-number="21"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(AvgReads)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-22" data-line-number="22"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">15</span>)</a></code></pre></div>
 <p>Why is it important to calculate these kinds of exploratory statistics? What else might we want to check?</p>
 <p>Let’s add another column for relative abundance so this is more informative.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(SampleID) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RelAbund =</span> Reads<span class="op">/</span><span class="kw">sum</span>(Reads))</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5">features_long &lt;-<span class="st"> </span>features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(SampleID) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RelAbund =</span> Reads<span class="op">/</span><span class="kw">sum</span>(Reads)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(SampleID) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RelAbund =</span> Reads<span class="op">/</span><span class="kw">sum</span>(Reads))</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">features_long &lt;-<span class="st"> </span>features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(SampleID) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RelAbund =</span> Reads<span class="op">/</span><span class="kw">sum</span>(Reads)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
 <p>What if we want to summarize feature abundances across a metadata variable like Treatment group or day? We need to join the two tables together. There are a set of dplyr functions to do this: <code>inner_join()</code>, <code>full_join()</code> , <code>left_join()</code>, and <code>right_join()</code>. The type of join that you want to do depends on whether you want to keep just the shared observations between your two tables, or all observations from one or both tables. You can read more about join functions by typing <code>?join</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">features_long &lt;-<span class="st"> </span><span class="kw">left_join</span>(features_long, metadata, <span class="dt">by =</span> <span class="st">&quot;SampleID&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">features_long &lt;-<span class="st"> </span><span class="kw">left_join</span>(features_long, metadata, <span class="dt">by =</span> <span class="st">&quot;SampleID&quot;</span>)</a></code></pre></div>
 <p>Some other convenient summary functions:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">    </span><span class="kw">count</span>(Treatment) </a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">    </span><span class="kw">count</span>(Treatment) </a></code></pre></div>
 <p>The <code>count()</code> function is shorthand for something we’ve already seen: grouping by a variable, and summarizing it by counting the number of observations in that group. In other words, <code>surveys %&gt;% count()</code> is equivalent to:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
 <p>For convenience, <code>count()</code> provides the <code>sort</code> argument:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">    </span><span class="kw">count</span>(SampleID, <span class="dt">sort =</span> T)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">features_long <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Reads <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">    </span><span class="kw">count</span>(SampleID, <span class="dt">sort =</span> T)</a></code></pre></div>
 <p>Try calculating some other summary statistics:</p>
 <ul>
 <li>How many reads total in each sample?</li>
@@ -837,15 +823,15 @@ Answer
 <h1>Exporting data</h1>
 <p>Now that you have learned how to use <strong><code>dplyr</code></strong> to extract information from or summarize your raw data, you may want to export these new data sets to share them with your collaborators or for archival.</p>
 <p>Similar to the <code>read_delim()</code> function used for reading data files into R, there is a <code>write_csv()</code> function that generates CSV files from data frames. Let’s make a reduced table of only ASVs with at least 1% relative abundance in at least 1 sample, and save it to a file.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">features_keep &lt;-<span class="st"> </span>features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(RelAbund <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.01</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(FeatureID)</a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5">features_keep &lt;-<span class="st"> </span><span class="kw">inner_join</span>(features_long, features_keep, <span class="dt">by =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(FeatureID, SampleID, MouseID, Treatment, Time_days, Reads, RelAbund)</a>
-<a class="sourceLine" id="cb32-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb32-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="kw">write_csv</span>(features_keep, <span class="dt">path =</span> <span class="st">&quot;data/FeatureTableFiltered.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">features_keep &lt;-<span class="st"> </span>features_long <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(RelAbund <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.01</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(FeatureID)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">features_keep &lt;-<span class="st"> </span><span class="kw">inner_join</span>(features_long, features_keep, <span class="dt">by =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(FeatureID, SampleID, MouseID, Treatment, Time_days, Reads, RelAbund)</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="kw">write_csv</span>(features_keep, <span class="dt">path =</span> <span class="st">&quot;FeatureTableFiltered.csv&quot;</span>)</a></code></pre></div>
 <blockquote>
 <h3 id="challenge-2" class="challenge">Challenge</h3>
 <p>Import the taxonomy table, and join it to the ASV feature table. You will need to first read it in as a qza object, convert it to a tibble, and then join it. Hint: there is a <code>parse_taxonomy()</code> function in qiime2R that should be helpful.</p>
@@ -854,19 +840,19 @@ Answer
 Answer
 </h3>
 <div style="background: #fff;">
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">taxonomy &lt;-<span class="st"> </span><span class="kw">read_qza</span>(<span class="st">&quot;artifacts/Feature_Taxonomy.qza&quot;</span>)<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">    </span><span class="kw">parse_taxonomy</span>(<span class="dt">tax_sep =</span> <span class="st">&quot;; &quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">    </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">    </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6">features_tax &lt;-<span class="st"> </span><span class="kw">left_join</span>(features_keep, taxonomy, <span class="dt">by =</span> <span class="st">&quot;FeatureID&quot;</span>)</a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="kw">write_csv</span>(features_tax, <span class="dt">path =</span> <span class="st">&quot;data/FeaturesFilteredTaxonomy.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">taxonomy &lt;-<span class="st"> </span><span class="kw">read_qza</span>(<span class="st">&quot;artifacts/Feature_Taxonomy.qza&quot;</span>)<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">    </span><span class="kw">parse_taxonomy</span>(<span class="dt">tax_sep =</span> <span class="st">&quot;; &quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">    </span><span class="kw">rownames_to_column</span>(<span class="dt">var =</span> <span class="st">&quot;FeatureID&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">    </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6">features_tax &lt;-<span class="st"> </span><span class="kw">left_join</span>(features_keep, taxonomy, <span class="dt">by =</span> <span class="st">&quot;FeatureID&quot;</span>)</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="kw">write_csv</span>(features_tax, <span class="dt">path =</span> <span class="st">&quot;FeaturesFilteredTaxonomy.csv&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 </blockquote>
 <p style="text-align: right; font-size: small;">
-Page built on: 📆 2020-04-23 ‒ 🕢 11:12:00
+Page built on: 📆 2020-04-23 ‒ 🕢 11:25:39
 </p>
 </div>
 

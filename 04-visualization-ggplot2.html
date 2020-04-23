@@ -583,7 +583,7 @@ div.tocify {
 <p>We start by loading the required packages. <strong><code>ggplot2</code></strong> is included in the <strong><code>tidyverse</code></strong> package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 <p>If not still in the workspace, load the data from the previous lesson. To start, we’ll make a plot of class-level abundances across time and across treatment groups.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">features &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;data/FeaturesFilteredTaxonomy.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">features &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;FeaturesFilteredTaxonomy.csv&quot;</span>)</a></code></pre></div>
 <p>We’ll first need to make a table of the total relative abundances of all features assigned to each class.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">class_abund &lt;-<span class="st"> </span>features <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(SampleID, MouseID, Treatment, Time_days, Class) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">RelAbund =</span> <span class="kw">sum</span>(RelAbund))</a></code></pre></div>
@@ -762,7 +762,7 @@ div.tocify {
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">ggsave</span>(final_figure, <span class="dt">file =</span> <span class="st">&quot;classAbundsFeatureCounts.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">height =</span> <span class="dv">6</span>)</a></code></pre></div>
 <p>Note: The parameters <code>width</code> and <code>height</code> also determine the font size in the saved plot.</p>
 <p style="text-align: right; font-size: small;">
-Page built on: 📆 2020-04-23 ‒ 🕢 11:12:39
+Page built on: 📆 2020-04-23 ‒ 🕢 11:27:07
 </p>
 </div>
 
