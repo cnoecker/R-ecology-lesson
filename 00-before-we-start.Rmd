@@ -1,6 +1,6 @@
 ---
-title: Before we start
-author: Data Carpentry contributors
+title: Data Carpentry for Microbial Ecology
+author: Cecilia Noecker & Data Carpentry contributors
 minutes: 15
 ---
 
@@ -9,6 +9,10 @@ minutes: 15
 ```{r, echo=FALSE, purl=FALSE, message = FALSE}
 source("setup.R")
 ```
+
+This lesson is an adaptation of the Data Carpentry lesson R for Ecologists, to focus on a 16S rRNA amplicon microbiome dataset and exploratory data analysis for microbiome studies. The official Data Carpentry version is found at https://datacarpentry.org/R-ecology-lesson/
+
+## Before We Start
 
 ------------
 
@@ -24,7 +28,6 @@ source("setup.R")
 >   troubleshooting with the R user community.
 
 ------------
-
 
 ## What is R? What is RStudio?
 
