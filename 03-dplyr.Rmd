@@ -86,9 +86,9 @@ To learn more about **`dplyr`** and **`tidyr`** after the workshop, you may want
 We'll read in our data using the `read_delim()` function, from the tidyverse package **`readr`**, instead of `read.csv()`.
 
 
-```{r, results = 'hide', purl = FALSE}
-metadata <- read_delim("~/Desktop/tutorial16S/metadata.tsv", delim = "\t")
-metadata <- read_delim("~/Desktop/tutorial16S/metadata.tsv", delim = "\t", comment = "#")
+```{r, results = 'hide', message = F, purl = FALSE}
+metadata <- read_delim("metadata.tsv", delim = "\t")
+metadata <- read_delim("metadata.tsv", delim = "\t", comment = "#")
 ```
 
 You will see the message `Parsed with column specification`, followed by each column name and its data type.
@@ -286,7 +286,7 @@ Let's read in the feature table to test out these tools. To do so, we will use t
 
 ```{r, purl = FALSE}
 library(qiime2R)
-feature_table <- read_qza("~/Desktop/tutorial16S/artifacts/Feature_Table.qza")$data
+feature_table <- read_qza("artifacts/Feature_Table.qza")$data
 class(feature_table)
 
 ```
@@ -475,7 +475,7 @@ features_keep <- inner_join(features_long, features_keep, by = "FeatureID") %>%
   select(FeatureID, SampleID, MouseID, Treatment, Time_days, Reads, RelAbund)
 
 
-write_csv(features_keep, path = "data/FeatureTableFiltered.csv")
+write_csv(features_keep, path = "FeatureTableFiltered.csv")
 ```
 
 > ### Challenge {.challenge}
@@ -493,7 +493,7 @@ write_csv(features_keep, path = "data/FeatureTableFiltered.csv")
 >
 > features_tax <- left_join(features_keep, taxonomy, by = "FeatureID")
 >
-> write_csv(features_tax, path = "data/FeaturesFilteredTaxonomy.csv")
+> write_csv(features_tax, path = "FeaturesFilteredTaxonomy.csv")
 > ```
 
 

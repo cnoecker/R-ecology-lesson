@@ -26,7 +26,6 @@ source("setup.R")
 To begin to manipulate data in R, we are first going to read in the metadata from last week's workshop.
 
 ```{r, eval=TRUE,  purl=FALSE}
-setwd("~/Desktop/tutorial16S/")
 metadata <- read.table("metadata.tsv", header = T)
 
 ```

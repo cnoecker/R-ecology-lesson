@@ -9,7 +9,7 @@ editor_options:
 
 ```{r setup, echo=FALSE, purl=FALSE}
 source("setup.R")
-features <- read_csv(file = "~/Desktop/tutorial16S/data/FeaturesFilteredTaxonomy.csv", col_types = cols())
+features <- read_csv(file = "FeaturesFilteredTaxonomy.csv", col_types = cols())
 ```
 
 ```{r, echo=FALSE, purl=TRUE}
@@ -39,7 +39,7 @@ If not still in the workspace, load the data from the previous lesson. To start,
 
 
 ```{r load-data, eval=F, purl=FALSE}
-features <- read_csv(file = "data/FeaturesFilteredTaxonomy.csv")
+features <- read_csv(file = "FeaturesFilteredTaxonomy.csv")
 ```
 
 We'll first need to make a table of the total relative abundances of all features assigned to each class. 
